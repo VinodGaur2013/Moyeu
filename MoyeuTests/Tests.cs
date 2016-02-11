@@ -32,7 +32,7 @@ namespace MoyeuTests
 		}
 
 		[Test]
-		public void SwitchToFavorites ()
+		public void SwitchToFavorites_Empty ()
 		{
 			app.Tap (q => q.Id ("toolbar").Class ("ImageButton"));
 			app.WaitForElement (q => q.Id ("left_drawer"),
@@ -41,6 +41,19 @@ namespace MoyeuTests
 			app.WaitForNoElement (q => q.Id ("left_drawer"),
 			                      postTimeout: TimeSpan.FromSeconds (1));
 			app.Screenshot ("Empty favorites");
+		}
+
+		[Test]
+		public void SwitchToFavorites_WithTwoFavs ()
+		{
+			app.Invoke ("reportFullyDrawn");
+			app.Tap (q => q.Id ("toolbar").Class ("ImageButton"));
+			app.WaitForElement (q => q.Id ("left_drawer"),
+			                    postTimeout: TimeSpan.FromSeconds (1));
+			app.Tap (q => q.Id ("left_drawer").Descendant ().Text ("Favorites"));
+			app.WaitForNoElement (q => q.Id ("left_drawer"),
+			                      postTimeout: TimeSpan.FromSeconds (1));
+			app.Screenshot ("Two favorites");
 		}
 
 		[Test]
